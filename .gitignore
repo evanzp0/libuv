@@ -73,3 +73,4 @@ ipch
 
 # make dist output
 libuv-*.tar.*
+.vscode/settings.json
