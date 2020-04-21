@@ -18,6 +18,7 @@ include_directories(../../src)
 add_executable(helloworld helloworld/main.c)
 add_executable(idle-basic idle-basic/main.c)
 add_executable(uvcat uvcat/main.c)
+add_executable(uvtee uvtee/main.c)
 IF (WIN32)
 
 ENDIF ()
