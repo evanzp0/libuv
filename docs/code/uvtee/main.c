@@ -49,7 +49,7 @@ void write_data(uv_stream_t *dest, size_t size, uv_buf_t buf, uv_write_cb cb) {
     req->buf = uv_buf_init((char*) malloc(size), size); // 回收点：2
     memcpy(req->buf.base, buf.base, size);  
 
-    uv_write((uv_write_t*) req, (uv_stream_t*)dest, &req->buf, 1, cb);
+    uv_write((uv_write_t*) req, (uv_stream_t*)dest, &req->buf, 1, cb); // req 是为了传给 cb 用的，&req->buf 才是用来输出数据的
 }
 
 void read_stdin(uv_stream_t *stream, ssize_t nread, const uv_buf_t *buf) {
