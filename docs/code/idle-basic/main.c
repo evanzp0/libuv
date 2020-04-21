@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-04-21 11:26:20
- * @LastEditTime: 2020-04-21 11:42:54
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /libuv/docs/code/idle-basic/main.c
- */
 #include <stdio.h>
 #include <uv.h>
 

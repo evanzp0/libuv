@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-04-21 11:26:20
- * @LastEditTime: 2020-04-21 11:40:58
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: /libuv/docs/code/uvcat/main.c
- */
 #include <assert.h>
 #include <stdio.h>
 #include <fcntl.h>
