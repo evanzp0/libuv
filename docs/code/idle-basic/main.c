@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-04-21 11:26:20
+ * @LastEditTime: 2020-04-21 11:42:54
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /libuv/docs/code/idle-basic/main.c
+ */
 #include <stdio.h>
 #include <uv.h>
 
@@ -5,16 +13,19 @@ int64_t counter = 0;
 
 void wait_for_a_while(uv_idle_t* handle) {
     counter++;
+    printf("%llu \n", counter);
 
-    if (counter >= 10e6)
-        uv_idle_stop(handle);
+    if (counter >= 10e5) {
+        printf("bye! \n");
+        uv_idle_stop(handle); // 关闭 idler handle
+    }
 }
 
 int main() {
     uv_idle_t idler;
 
-    uv_idle_init(uv_default_loop(), &idler);
-    uv_idle_start(&idler, wait_for_a_while);
+    uv_idle_init(uv_default_loop(), &idler); // 在 idler handle 上绑定 loop
+    uv_idle_start(&idler, wait_for_a_while); // 在 idler handle 上绑定回调函数 wait_for_a_while
 
     printf("Idling...\n");
     uv_run(uv_default_loop(), UV_RUN_DEFAULT);

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-04-21 11:26:20
+ * @LastEditTime: 2020-04-21 11:40:58
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /libuv/docs/code/uvcat/main.c
+ */
 #include <assert.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -53,11 +61,16 @@ void on_open(uv_fs_t *req) {
 }
 
 int main(int argc, char **argv) {
-    uv_fs_open(uv_default_loop(), &open_req, argv[1], O_RDONLY, 0, on_open);
+    // 如果 cb (就是最后一个回调函数不为空)，则 open_req->path 会指向 malloc 的一个区域，
+    // 该区域的内容复制了 argv[1] 的字符串
+    uv_fs_open(uv_default_loop(), &open_req, argv[1], O_RDONLY, 0,  on_open);
     uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 
+    // uv_fs_open() 对于 req->path 会用 malloc 分配内存，所以需要 cleanup
     uv_fs_req_cleanup(&open_req);
+    // uv_fs_read() 和 uv_fs_write() 对于 req->bufs 会用 malloc 分配内存，所以需要 cleanup
     uv_fs_req_cleanup(&read_req);
     uv_fs_req_cleanup(&write_req);
+    // uv_fs_req_close() 只是调用 close(fd)，不存在 malloc 分配，所以不需要 cleanup
     return 0;
 }
