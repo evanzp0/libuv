@@ -10,16 +10,16 @@ void run_command(uv_fs_event_t *handle, const char *filename, int events, int st
     char path[1024];
     size_t size = 1023;
     // Does not handle error if path is longer than 1023.
-    uv_fs_event_getpath(handle, path, &size);
+    uv_fs_event_getpath(handle, path, &size); // 从 uv_fs_event_t handle 中提取 path
     path[size] = '\0';
 
-    fprintf(stderr, "Change detected in %s: ", path);
+    fprintf(stderr, "Change detected in path %s: ", path);
     if (events & UV_RENAME)
         fprintf(stderr, "renamed");
     if (events & UV_CHANGE)
         fprintf(stderr, "changed");
 
-    fprintf(stderr, " %s\n", filename ? filename : "");
+    fprintf(stderr, ", filename: %s\n", filename ? filename : "");
     system(command);
 }
 
