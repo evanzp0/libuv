@@ -13,8 +13,11 @@ set(NODE_INCLUDE_PATH "/usr/local/include/node")
 include_directories(${NODE_INCLUDE_PATH})
 link_libraries(uv)
 
+include_directories(../../src)
+
 add_executable(helloworld helloworld/main.c)
 add_executable(idle-basic idle-basic/main.c)
+add_executable(uvcat uvcat/main.c)
 IF (WIN32)
 
 ENDIF ()
