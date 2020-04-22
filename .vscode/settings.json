@@ -1,6 +1,16 @@
 {
     "files.associations": {
         "iterator": "c",
-        "memory": "c"
+        "memory": "c",
+        "uv.h": "c",
+        "__locale": "c",
+        "atomic": "c",
+        "cstdlib": "c",
+        "locale": "c",
+        "ostream": "c",
+        "typeinfo": "c",
+        "algorithm": "c",
+        "complex": "c",
+        "new": "c"
     }
 }
