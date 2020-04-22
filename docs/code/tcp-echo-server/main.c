@@ -37,6 +37,7 @@ void echo_write(uv_write_t *req, int status) {
 }
 
 void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
+    printf("nread = %zu, %s \n", nread, buf->base);
     if (nread > 0) {
         // 注意：自定义的 write_req_t 开头是个 uv_write_t 类型的数据，所以在 uv_write() 中可以被强制转换为 (uv_write_t*) req
         write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t)); 

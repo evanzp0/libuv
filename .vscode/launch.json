@@ -10,7 +10,8 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}.out",
             "args": [
-                "t.tmp"
+                "127.0.0.1",
+                "7000"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
