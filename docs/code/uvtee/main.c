@@ -46,7 +46,7 @@ void on_file_write(uv_write_t *req, int status) {
 void write_data(uv_stream_t *dest, size_t size, uv_buf_t buf, uv_write_cb cb) {
     // 生成一个 write request (handle), 在 uv_write() 注册的 on_stdout_write 回调函数中，需要调用 free_write_req() 将它回收
     write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t)); // 回收点：1
-    req->buf = uv_buf_init((char*) malloc(size), size); // 回收点：2
+    req->buf = uv_buf_init((char*) malloc(size), size); // 回收点：2，注意：这里 uv_buf_init() 返回一个局部变量，req->buf 对它进行了值COPY
     memcpy(req->buf.base, buf.base, size);  
 
     uv_write((uv_write_t*) req, (uv_stream_t*)dest, &req->buf, 1, cb); // req 是为了传给 cb 用的，&req->buf 才是用来输出数据的
@@ -65,7 +65,7 @@ void read_stdin(uv_stream_t *stream, ssize_t nread, const uv_buf_t *buf) {
         write_data((uv_stream_t *)&file_pipe, nread, *buf, on_file_write);
     }
 
-    // 回收在 alloc_buffer 中分配的 buf->base
+    // 回收在 alloc_buffer() 中分配的 buf->base
     // OK to free buffer as write_data copies it.
     if (buf->base)
         free(buf->base);

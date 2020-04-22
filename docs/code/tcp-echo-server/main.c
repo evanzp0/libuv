@@ -30,7 +30,7 @@ void on_close(uv_handle_t* handle) {
 }
 
 void echo_write(uv_write_t *req, int status) {
-    if (status) {
+    if (status) { // status will be 0 in case of success, < 0 otherwise.
         fprintf(stderr, "Write error %s\n", uv_strerror(status));
     }
     free_write_req(req);
@@ -38,10 +38,12 @@ void echo_write(uv_write_t *req, int status) {
 
 void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
     if (nread > 0) {
-        write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t));
-        req->buf = uv_buf_init(buf->base, nread);
-        uv_write((uv_write_t*) req, client, &req->buf, 1, echo_write);
-        return;
+        // 注意：自定义的 write_req_t 开头是个 uv_write_t 类型的数据，所以在 uv_write() 中可以被强制转换为 (uv_write_t*) req
+        write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t)); 
+        // uv_buf_init()返回了一个局部变量 buf (uv_buf_t)，req->buf = uv_buf_init()进行了值COPY
+        req->buf = uv_buf_init(buf->base, nread); 
+        uv_write((uv_write_t*) req, client, &req->buf, 1, echo_write); // nbufs（第四个参数）：Number of buffers in bufs
+        return; // 因为 req->buf.base 和 buf->base 是复用的，此处必须要 return。不然到函数最后的 free(buf->base)执行了，就会出错了
     }
     if (nread < 0) {
         if (nread != UV_EOF)
@@ -49,6 +51,7 @@ void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf) {
         uv_close((uv_handle_t*) client, on_close);
     }
 
+    // 释放 alloc_buffer() 中分配的内存
     free(buf->base);
 }
 
@@ -77,7 +80,7 @@ int main() {
 
     uv_ip4_addr("0.0.0.0", DEFAULT_PORT, &addr);
 
-    uv_tcp_bind(&server, (const struct sockaddr*)&addr, 0);
+    uv_tcp_bind(&server, (const struct sockaddr*)&addr, 0); // flag (第三个参数): 标志可以包含UV_TCP_IPV6ONLY(=1)，在这种情况下，将禁用双栈支持，并且仅使用IPv6
     int r = uv_listen((uv_stream_t*) &server, DEFAULT_BACKLOG, on_new_connection);
     if (r) {
         fprintf(stderr, "Listen error %s\n", uv_strerror(r));
