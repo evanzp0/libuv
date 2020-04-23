@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     uv_tcp_t sock;
     struct sockaddr_in dest_addr;
 
-    uv_tcp_init(loop, &sock);
+    uv_tcp_init(loop, &sock); // bind loop to sock, and assign sock fd;
     // uv_connect_t *connect_req = (uv_connect_t *)malloc(sizeof(uv_connect_t)); // main 退出时自动释放 connect_req，所以不需要用malloc 分配内存
     uv_connect_t *connect_req;
 
