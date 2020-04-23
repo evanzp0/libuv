@@ -71,7 +71,7 @@ void input_and_send(uv_stream_t * handle) {
           }
       }
     } while (!(n = strlen(input_buf)));
-    setbuf(stdin,NULL);
+    while (getchar() != '\n'); // clear stdin buffer
 
     write_request_t *write_req = (write_request_t *)malloc(sizeof(write_request_t));
     // input_buf 被挂到 write_req->buf.base 上了
