@@ -11,6 +11,7 @@
         "typeinfo": "c",
         "algorithm": "c",
         "complex": "c",
-        "new": "c"
+        "new": "c",
+        "bitset": "c"
     }
 }

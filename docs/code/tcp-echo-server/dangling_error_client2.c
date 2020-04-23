@@ -21,6 +21,9 @@ void echo_read(uv_stream_t* stream, ssize_t nread, const uv_buf_t* buf) {
 
   // 結果を buf から取得して表示
   printf("result: %s\n", buf->base);
+
+  // if not stop stream, the program will not exit
+  uv_read_stop(stream);
 }
 
 // suggeseted_size で渡された領域を確保
@@ -74,6 +77,7 @@ void on_connect(uv_connect_t *req, int status) {
   int buf_count = 1;
   // 書き込み
   uv_write(&write_req, tcp, &buf, buf_count, on_write_end);
+  // uv_write(&write_req, tcp, &buf, buf_count, 0);
 }
 
 int main(void) {
