@@ -12,6 +12,7 @@
         "algorithm": "c",
         "complex": "c",
         "new": "c",
-        "bitset": "c"
+        "bitset": "c",
+        "ios": "c"
     }
 }
