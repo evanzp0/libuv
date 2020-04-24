@@ -34,7 +34,7 @@ void on_read(uv_fs_t *req) {
     }
     else if (req->result > 0) { // 如果有数据则输出到 stdout
         iov.len = req->result;
-        uv_fs_write(uv_default_loop(), &write_req, 1, &iov, 1, -1, on_write); 
+        uv_fs_write(uv_default_loop(), &write_req, 1, &iov, 1, -1, on_write);  // flag = -1, 表示使用当前位移
     }
 }
 
@@ -56,7 +56,7 @@ void on_open(uv_fs_t *req) {
 int main(int argc, char **argv) {
     // 如果 cb (就是最后一个回调函数)不为空，则 open_req->path 会指向 malloc 的一个区域，
     // 该区域的内容复制了 argv[1] 的字符串
-    uv_fs_open(uv_default_loop(), &open_req, argv[1], O_RDONLY, 0,  on_open);
+    uv_fs_open(uv_default_loop(), &open_req, "/Users/zhangevan/Documents/workspace/libuv/docs/code/uvcat/hello.txt", O_RDONLY, 0,  on_open);
 
     // 结束循环
     uv_run(uv_default_loop(), UV_RUN_DEFAULT);
