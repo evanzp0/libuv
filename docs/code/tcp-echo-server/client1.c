@@ -47,6 +47,7 @@ void connect_cb(uv_connect_t* connect_req, int status) {
     puts("Connected!");
 
     input_and_send((uv_stream_t *)connect_req->handle);
+    // 因为uv_tcp_t 是 handle 级别的监听器，在整个 loop 循环中都会存在，就只需要在 loop 中注册一次即可反复被调用
     uv_read_start((uv_stream_t *)connect_req->handle, alloc_cb, read_cb);
 }
 
