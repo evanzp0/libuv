@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
 
     // 和 uv_tcp_t 不同，uv_fs_t 没有类似 uv_tcp_init() 这样的初始化函数，因为进行 uv_tcp_init() 为了获得 socket fd，然后才能band、listen 和 connect。
     // 而文件是在打开时生成 file fd 的，你也可以把 uv_fs_open() 看成是 uv_fs_t 的初始化。
+    // 另外 uv_fs_t 是 request，而 uv_tcp_t 是 handle
     uv_fs_open(&loop, &fs_open_req, "/Users/zhangevan/Documents/workspace/libuv/docs/code/uvcat/hello.txt", O_RDONLY, 0, open_cb); 
     // uv_fs_read(&loop, &fs_read_req)
     printf("loop address: %p\n", &loop);
