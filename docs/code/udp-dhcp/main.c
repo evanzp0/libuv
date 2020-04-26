@@ -20,7 +20,8 @@ void on_read(uv_udp_t *req, ssize_t nread, const uv_buf_t *buf, const struct soc
         uv_close((uv_handle_t*) req, NULL);
         free(buf->base);
         return;
-    }
+    } else if (nread == 0)
+        return;
 
     char sender[17] = { 0 };
     uv_ip4_name((const struct sockaddr_in*) addr, sender, 16);
@@ -36,7 +37,7 @@ void on_read(uv_udp_t *req, ssize_t nread, const uv_buf_t *buf, const struct soc
     fprintf(stderr, "Offered IP %d.%d.%d.%d\n", ip[3], ip[2], ip[1], ip[0]);
 
     free(buf->base);
-    uv_udp_recv_stop(req);
+    // uv_udp_recv_stop(req);
 }
 
 uv_buf_t make_discover_msg() {

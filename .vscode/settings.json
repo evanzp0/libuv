@@ -13,6 +13,10 @@
         "complex": "c",
         "new": "c",
         "bitset": "c",
-        "ios": "c"
+        "ios": "c",
+        "socket.h": "c",
+        "__bit_reference": "cpp",
+        "__string": "cpp",
+        "cstring": "cpp"
     }
 }
