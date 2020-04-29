@@ -20,6 +20,7 @@
         "cstring": "cpp",
         "thread": "cpp",
         "type_traits": "cpp",
-        "__threading_support": "cpp"
+        "__threading_support": "cpp",
+        "stdio.h": "c"
     }
 }
