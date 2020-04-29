@@ -3,7 +3,7 @@
         {
             "type": "shell",
             "label": "C/C++: clang build active file",
-            "command": "/usr/bin/clang",
+            "command": "/usr/bin/gcc",
             "args": [
                 "-g",
                 "${file}",
@@ -12,7 +12,8 @@
                 "-I/usr/local/include/node",
                 "-L",
                 "/usr/local/lib",
-                "-luv"
+                "-luv",
+                // "-pthread"
             ],
             "options": {
                 "cwd": "/usr/bin"

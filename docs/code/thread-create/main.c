@@ -8,7 +8,7 @@ void hare(void *arg) {
     while (tracklen) {
         tracklen--;
         sleep(1);
-        fprintf(stderr, "Hare ran another step\n");
+        fprintf(stderr, "Hare ran another step: %d \n", tracklen);
     }
     fprintf(stderr, "Hare done running!\n");
 }
@@ -17,7 +17,7 @@ void tortoise(void *arg) {
     int tracklen = *((int *) arg);
     while (tracklen) {
         tracklen--;
-        fprintf(stderr, "Tortoise ran another step\n");
+        fprintf(stderr, "Tortoise ran another step: %d \n", tracklen);
         sleep(3);
     }
     fprintf(stderr, "Tortoise done running!\n");

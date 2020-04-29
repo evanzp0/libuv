@@ -17,6 +17,9 @@
         "socket.h": "c",
         "__bit_reference": "cpp",
         "__string": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "thread": "cpp",
+        "type_traits": "cpp",
+        "__threading_support": "cpp"
     }
 }
