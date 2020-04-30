@@ -17,7 +17,7 @@ int main() {
     options.exit_cb = NULL;
     options.file = "sleep";
     options.args = args;
-    options.flags = UV_PROCESS_DETACHED;
+    options.flags = UV_PROCESS_DETACHED;  // 即时 CTRL+C，退出主程序，子进程也不会退出
 
     int r;
     if ((r = uv_spawn(loop, &child_req, &options))) {
@@ -25,7 +25,7 @@ int main() {
         return 1;
     }
     fprintf(stderr, "Launched sleep with PID %d\n", child_req.pid);
-    uv_unref((uv_handle_t*) &child_req);
+    // uv_unref((uv_handle_t*) &child_req); // 如果不调用 uv_unref()，那么 handle 会监视子进程，导致主程序不退出
 
     return uv_run(loop, UV_RUN_DEFAULT);
 }

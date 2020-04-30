@@ -19,8 +19,8 @@ int main() {
     size_t size = 500;
     char path[size];
     uv_exepath(path, &size);
-    strcpy(path + (strlen(path) - strlen("proc-streams")), "test");
-
+    strcpy(path + (strlen(path) - strlen("main.out")), "test.out");
+    printf("%s \n", path);
     char* args[2];
     args[0] = path;
     args[1] = NULL;
@@ -30,9 +30,9 @@ int main() {
     options.stdio_count = 3;
     uv_stdio_container_t child_stdio[3];
     child_stdio[0].flags = UV_IGNORE;
-    child_stdio[1].flags = UV_IGNORE;
+    child_stdio[1].flags = UV_IGNORE; // UV_INHERIT_FD
     child_stdio[2].flags = UV_INHERIT_FD;
-    child_stdio[2].data.fd = 2;
+    // child_stdio[2].data.fd = 2;
     options.stdio = child_stdio;
 
     options.exit_cb = on_exit;

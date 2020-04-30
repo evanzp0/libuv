@@ -18,8 +18,8 @@ void invoke_cgi_script(uv_tcp_t *client) {
     size_t size = 500;
     char path[size];
     uv_exepath(path, &size);
-    strcpy(path + (strlen(path) - strlen("cgi")), "tick");
-
+    strcpy(path + (strlen(path) - strlen("main.out")), "tick.out");
+    printf("%s \n", path);
     char* args[2];
     args[0] = path;
     args[1] = NULL;
