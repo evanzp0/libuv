@@ -15,8 +15,10 @@ void worker(void *arg) {
 int main(int argc, char **argv) {
   uv_sem_init(&sem,1); // 将信号量设为1
   uv_thread_t nthread1,nthread2;
-  uv_thread_create(&nthread1, worker, NULL);
-  uv_thread_create(&nthread2, worker, NULL);
-  uv_thread_join(&nthread1);
-  uv_thread_join(&nthread2);
+  uv_thread_create(&nthread1, worker, NULL); //激活 nthread1
+  uv_thread_create(&nthread2, worker, NULL); //激活 nthread2
+  uv_thread_join(&nthread1); //等待 nthread1 完成
+  uv_thread_join(&nthread2); //等待 nthread2 完成
+  
+  printf("over! \n");
 }
