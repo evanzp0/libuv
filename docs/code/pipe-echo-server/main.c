@@ -82,6 +82,8 @@ int main() {
     signal(SIGINT, remove_sock);
 
     int r;
+    uv_fs_t pipe_sock;
+    uv_fs_unlink(loop, &pipe_sock, PIPENAME, NULL);
     if ((r = uv_pipe_bind(&server, PIPENAME))) {
         fprintf(stderr, "Bind error %s\n", uv_err_name(r));
         return 1;
